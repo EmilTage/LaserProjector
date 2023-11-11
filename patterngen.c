@@ -16,7 +16,7 @@ int createSineWave(int spiHandle, double delaySecs) {
 
       // printf("laserPos.x : %d    laserPos.y : %d\n", laserPos.x, laserPos.y);
 
-      if (setDacVoltage(spiHandle, laserPos))
+      if (setDacVoltage(spiHandle, laserPos) < 0)
          return -1;
 
       time_sleep(delaySecs);
@@ -26,4 +26,12 @@ int createSineWave(int spiHandle, double delaySecs) {
    }
 
    return 0;
+}
+
+int createPatternFromFile() {
+
+    
+
+
+    return 0;
 }
