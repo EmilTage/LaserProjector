@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
    int long_index    = 0;
    int pattern       = PATTERN_SINEWAVE;
    double delaySecs  = DEFAULT_DELAY;
-   char filename[128];
+   char *filename;
 
    while ((opt = getopt_long(argc, argv,"d:f:s", 
                   long_options, &long_index )) != -1) {
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
                break;
             case 'f' : 
                pattern = PATTERN_FILE;
-               strcpy(filename, optarg); 
+               filename = optarg; 
                break;
             default:
                printf("-d|--delay : 0.001; -s|--sine; -f|--file : heart.txt\n");
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
             return -1;
          break;
       case PATTERN_FILE : 
-         pattern = PATTERN_SINEWAVE;
+         createPatternFromFile(filename, spiHandle, delaySecs);
          break;
       default: exit(-1);
    }
