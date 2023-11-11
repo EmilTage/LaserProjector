@@ -13,7 +13,7 @@ CFLAGS = -Wall -g -pthread
 
 # define any directories containing header files other than /usr/include
 #
-INCLUDES = -I/usr/local/include
+INCLUDES = -I/usr/local/include -I./include
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
@@ -26,7 +26,7 @@ LFLAGS = -L/usr/local/lib
 LIBS = -lpigpio -lrt -lm
 
 # define the C source files
-SRCS = lasermain.c
+SRCS = lasermain.c patterngen.c hwcontrol.c
 
 # define the C object files 
 #
