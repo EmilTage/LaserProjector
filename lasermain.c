@@ -4,6 +4,8 @@
 #include <signal.h>
 #include <getopt.h>
 #include <string.h>
+#include <pthread.h>
+#include <ncurses.h>
 #include "lasermain.h"
 #include "patterngen.h"
 #include "hwcontrol.h"
@@ -21,6 +23,7 @@ enum patterns {
 };
 
 void cleanup() {
+   endwin();
    gpioSetMode(GPIO_LASER, PI_OUTPUT);
    gpioWrite(GPIO_LASER, PI_LOW);
    gpioTerminate();
@@ -44,6 +47,7 @@ int main(int argc, char *argv[])
    int long_index    = 0;
    int pattern       = PATTERN_SINEWAVE;
    double delaySecs  = DEFAULT_DELAY;
+   pthread_t thread_id;
    char *filename;
 
    while ((opt = getopt_long(argc, argv,"d:f:s", 
@@ -86,6 +90,9 @@ int main(int argc, char *argv[])
       return -1;
    }
 
+   if (pthread_create(&thread_id, NULL, userInput, NULL) != 0)
+      printf("Failed to create thread!\n");
+
    /* Everything is now setup, create pattern */
    switch (pattern) {
       case PATTERN_SINEWAVE :
@@ -93,7 +100,8 @@ int main(int argc, char *argv[])
             return -1;
          break;
       case PATTERN_FILE : 
-         createPatternFromFile(filename, spiHandle, delaySecs);
+         if (createPatternFromFile(filename, spiHandle, delaySecs) < 0)
+            return -1;
          break;
       default: exit(-1);
    }

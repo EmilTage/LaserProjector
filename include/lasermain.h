@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 typedef struct {
-    uint16_t x;
-    uint16_t y;
+    int16_t x;
+    int16_t y;
 } stLaserPos;
 
 #define SPI_CHANNEL_CE0     0
@@ -18,5 +18,7 @@ typedef struct {
 #define GPIO_PWR_TO_GALVO   17
 #define GPIO_LASER          27
 #define DEFAULT_DELAY       0.01
+
+void cleanup();
 
 #endif
