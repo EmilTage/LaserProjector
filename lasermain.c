@@ -22,10 +22,14 @@ enum patterns {
    PATTERN_FILE
 };
 
+double delaySecs  = DEFAULT_DELAY;
+
 void cleanup() {
    endwin();
    gpioSetMode(GPIO_LASER, PI_OUTPUT);
+   gpioSetMode(GPIO_PWR_TO_GALVO, PI_OUTPUT);
    gpioWrite(GPIO_LASER, PI_LOW);
+   gpioWrite(GPIO_PWR_TO_GALVO, PI_LOW);
    gpioTerminate();
 }
 
@@ -46,7 +50,6 @@ int main(int argc, char *argv[])
    int opt           = 0;
    int long_index    = 0;
    int pattern       = PATTERN_SINEWAVE;
-   double delaySecs  = DEFAULT_DELAY;
    pthread_t thread_id;
    char *filename;
 
@@ -96,11 +99,11 @@ int main(int argc, char *argv[])
    /* Everything is now setup, create pattern */
    switch (pattern) {
       case PATTERN_SINEWAVE :
-         if (createSineWave(spiHandle, delaySecs) < 0)
+         if (createSineWave(spiHandle) < 0)
             return -1;
          break;
       case PATTERN_FILE : 
-         if (createPatternFromFile(filename, spiHandle, delaySecs) < 0)
+         if (createPatternFromFile(filename, spiHandle) < 0)
             return -1;
          break;
       default: exit(-1);

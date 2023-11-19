@@ -19,6 +19,8 @@ typedef struct {
 #define GPIO_LASER          27
 #define DEFAULT_DELAY       0.01
 
+extern double delaySecs;
+
 void cleanup();
 
 #endif

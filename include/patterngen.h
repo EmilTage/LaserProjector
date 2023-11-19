@@ -3,8 +3,8 @@
 
 #include <termios.h>
 
-int createSineWave(int, double);
-int createPatternFromFile(char *filename, int spiHandle, double delaySecs);
+int createSineWave(int);
+int createPatternFromFile(char *filename, int spiHandle);
 void *userInput();
 
 /*    Global variables    */
